@@ -1,0 +1,137 @@
+{
+  "name": "招商雷达",
+  "package": "招商雷达-源码包.zip",
+  "generatedAt": "2026-11-11T05:07:37.169111+00:00",
+  "githubRepo": "https://github.com/TanJane1990/zhaoshang-leida.git",
+  "slug": "chang-san-jiao-zhao-shang-lei-da",
+  "runtime": "typescript",
+  "scheduledRefresh": [
+    {
+      "id": "czsj-radar-refresh-0800",
+      "action": "refreshsignals",
+      "schedule": "daily 08:00 Asia/Shanghai"
+    },
+    {
+      "id": "czsj-radar-refresh-1300",
+      "action": "refreshsignals",
+      "schedule": "daily 13:00 Asia/Shanghai"
+    },
+    {
+      "id": "czsj-radar-refresh-1800",
+      "action": "refreshsignals",
+      "schedule": "daily 18:00 Asia/Shanghai"
+    }
+  ],
+  "containsRuntimeData": false,
+  "note": "源码包只含代码、结构与配置，不含运行时数据库 app.db 的数据（信号/政策/城市档案/项目线索/联系方式/刷新记录）。自动打包发布见 .github/workflows/release.yml。",
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 8068
+    },
+    {
+      "path": "DATA-PLAN.md",
+      "bytes": 40474
+    },
+    {
+      "path": "AGENTS.md",
+      "bytes": 1068
+    },
+    {
+      "path": "space.json",
+      "bytes": 587
+    },
+    {
+      "path": "package.json",
+      "bytes": 934
+    },
+    {
+      "path": "bunfig.toml",
+      "bytes": 497
+    },
+    {
+      "path": "tsconfig.base.json",
+      "bytes": 635
+    },
+    {
+      "path": ".gitignore",
+      "bytes": 270
+    },
+    {
+      "path": ".github/workflows/release.yml",
+      "bytes": 3242
+    },
+    {
+      "path": "client/index.html",
+      "bytes": 933
+    },
+    {
+      "path": "client/build.mjs",
+      "bytes": 361
+    },
+    {
+      "path": "client/tsconfig.json",
+      "bytes": 430
+    },
+    {
+      "path": "client/src/App.tsx",
+      "bytes": 145141
+    },
+    {
+      "path": "client/src/main.tsx",
+      "bytes": 1151
+    },
+    {
+      "path": "client/src/api.ts",
+      "bytes": 935
+    },
+    {
+      "path": "client/src/theme.css",
+      "bytes": 1669
+    },
+    {
+      "path": "client/src/globals.d.ts",
+      "bytes": 24
+    },
+    {
+      "path": "server/tsconfig.json",
+      "bytes": 343
+    },
+    {
+      "path": "server/src/actions.ts",
+      "bytes": 150237
+    },
+    {
+      "path": "server/src/schema.ts",
+      "bytes": 8424
+    },
+    {
+      "path": "server/src/scoring.ts",
+      "bytes": 14548
+    },
+    {
+      "path": "drizzle/0001_initial.sql",
+      "bytes": 118
+    },
+    {
+      "path": "drizzle/0002_radar_tables.sql",
+      "bytes": 2273
+    },
+    {
+      "path": "drizzle/0003_add_signal_deal_stage.sql",
+      "bytes": 168
+    },
+    {
+      "path": "drizzle/0004_add_company_contacts.sql",
+      "bytes": 669
+    },
+    {
+      "path": "drizzle/0005_signal_leads_followups.sql",
+      "bytes": 316
+    },
+    {
+      "path": "drizzle/meta/_journal.json",
+      "bytes": 785
+    }
+  ]
+}
