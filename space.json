@@ -1,0 +1,24 @@
+{
+  "entry": "client/dist/index.html",
+  "managedCronJobs": [
+    {
+      "action": "refreshsignals",
+      "id": "czsj-radar-refresh-0800",
+      "schedule": "daily 08:00 Asia/Shanghai"
+    },
+    {
+      "action": "refreshsignals",
+      "id": "czsj-radar-refresh-1300",
+      "schedule": "daily 13:00 Asia/Shanghai"
+    },
+    {
+      "action": "refreshsignals",
+      "id": "czsj-radar-refresh-1800",
+      "schedule": "daily 18:00 Asia/Shanghai"
+    }
+  ],
+  "name": "招商雷达",
+  "platformVersion": 28,
+  "runtime": "typescript",
+  "slug": "chang-san-jiao-zhao-shang-lei-da"
+}
