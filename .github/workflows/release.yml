@@ -1,0 +1,88 @@
+name: 打包并发布招商雷达源码包
+
+# 触发方式：
+# 1. 推送 v* 标签（如 v1.0.0）→ 自动打包并发布到 GitHub Releases
+# 2. 在 Actions 页手动运行（workflow_dispatch）→ 打包并上传为构建产物（Artifacts），
+#    也可勾选 publish_release 直接发一个 Release
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+    inputs:
+      publish_release:
+        description: "同时发布为 GitHub Release"
+        type: boolean
+        default: false
+      release_tag:
+        description: "发布用的标签名（勾选发布时必填，如 v1.0.0）"
+        type: string
+        default: ""
+
+permissions:
+  contents: write
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 检出源码
+        uses: actions/checkout@v4
+
+      - name: 确定版本号
+        id: ver
+        shell: bash
+        run: |
+          if [ "${GITHUB_REF_TYPE}" = "tag" ]; then
+            echo "tag=${GITHUB_REF_NAME}" >> "$GITHUB_OUTPUT"
+          elif [ -n "${{ inputs.release_tag }}" ]; then
+            echo "tag=${{ inputs.release_tag }}" >> "$GITHUB_OUTPUT"
+          else
+            echo "tag=dev-$(date +%Y%m%d)-${GITHUB_SHA::7}" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: 打包源码（招商雷达-<版本>.zip）
+        shell: bash
+        run: |
+          PKG="招商雷达-${{ steps.ver.outputs.tag }}"
+          mkdir -p "dist-pkg/${PKG}"
+          # 只打包源码与配置；运行数据 app.db、依赖与构建产物不进包（见 .gitignore 与 README）
+          rsync -a ./ "dist-pkg/${PKG}/" \
+            --exclude '.git/' \
+            --exclude 'dist-pkg/' \
+            --exclude 'app.db' \
+            --exclude 'app.db-shm' \
+            --exclude 'app.db-wal' \
+            --exclude 'node_modules/' \
+            --exclude '.bun-cache/' \
+            --exclude 'client/dist/' \
+            --exclude 'client/dist-cvm/' \
+            --exclude 'server/dist/' \
+            --exclude '.space-build/' \
+            --exclude '.space-build-cvm/' \
+            --exclude 'audits/' \
+            --exclude '.harness/' \
+            --exclude 'icon.*' \
+            --exclude '.xmds-icon'
+          (cd dist-pkg && zip -r "../${PKG}.zip" "${PKG}")
+          ls -la "${PKG}.zip"
+          unzip -l "${PKG}.zip" | head -60
+
+      - name: 上传构建产物（手动运行时可直接下载）
+        uses: actions/upload-artifact@v4
+        with:
+          name: 招商雷达-${{ steps.ver.outputs.tag }}
+          path: 招商雷达-${{ steps.ver.outputs.tag }}.zip
+
+      - name: 发布到 GitHub Releases
+        if: github.ref_type == 'tag' || inputs.publish_release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.ver.outputs.tag }}
+          name: 招商雷达 ${{ steps.ver.outputs.tag }}
+          files: 招商雷达-${{ steps.ver.outputs.tag }}.zip
+          body: |
+            招商雷达完整源码包（前端 + 后端 + 数据库迁移 + 定时刷新配置 + README）。
+
+            说明：本包只含源码，不含运行时数据库 app.db 里的数据（信号、政策、城市档案、
+            项目线索、联系方式、刷新记录）。部署与恢复方式见包内 README.md。
