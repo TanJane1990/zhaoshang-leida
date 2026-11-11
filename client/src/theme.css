@@ -1,0 +1,75 @@
+@import "tailwindcss";
+@import "tailwindcss-safe-area";
+
+@theme {
+  --text-xs: 12px;
+  --text-xs--line-height: 16px;
+  --text-sm: 14px;
+  --text-sm--line-height: 20px;
+  --text-base: 16px;
+  --text-base--line-height: 24px;
+  --text-lg: 18px;
+  --text-lg--line-height: 28px;
+  --text-xl: 20px;
+  --text-xl--line-height: 28px;
+  --text-2xl: 24px;
+  --text-2xl--line-height: 32px;
+  --text-3xl: 30px;
+  --text-3xl--line-height: 36px;
+}
+
+:root {
+  color-scheme: light dark;
+  --bg: #f5f7fa;
+  --surface: #ffffff;
+  --surface-2: #eef2f7;
+  --text: #1a2433;
+  --dim: #5b6b7f;
+  --border: #dde4ec;
+  --accent: #1677ff;
+  --navy: #0b2c4a;
+  --navy-text: #ffffff;
+  --good: #1f9d66;
+  --warn: #d98e04;
+  --bad: #d64545;
+  --radius: 16px;
+  --space-surface: var(--surface);
+  --space-surface-alt: var(--surface-2);
+  --space-muted: var(--dim);
+  --space-border: var(--border);
+  --space-accent: var(--accent);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0c1220;
+    --surface: #141d2e;
+    --surface-2: #1b2740;
+    --text: #e8eef6;
+    --dim: #93a5bd;
+    --border: #263350;
+    --accent: #4d94ff;
+    --navy: #0b2c4a;
+    --navy-text: #ffffff;
+    --good: #34c07c;
+    --warn: #eda92c;
+    --bad: #ef6464;
+  }
+}
+
+/* 刘海屏 / 挖孔屏适配：页面底色铺到安全区外（刘海、状态栏、手势条区域），
+   避免深色模式下刘海两侧露白边；内容侧的上下左右留白由 App 里的
+   *-safe / *-safe-offset-* 工具类按 env(safe-area-inset-*) 逐处避让。 */
+html,
+body {
+  background-color: var(--bg);
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  body {
+    background: #ffffff !important;
+  }
+}

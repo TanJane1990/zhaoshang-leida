@@ -1,13 +1,19 @@
-node_modules/
+# 运行时数据与本地产物 —— 不进源码仓库
 app.db
 app.db-shm
 app.db-wal
+node_modules/
+.bun-cache/
 client/dist/
 client/dist-cvm/
 server/dist/
 .space-build/
 .space-build-cvm/
-dist-pkg/
-.bun-cache/
 audits/
 .harness/
+icon.png
+icon.jpg
+icon.webp
+.xmds-icon
+*.tsbuildinfo
+dist-pkg/
